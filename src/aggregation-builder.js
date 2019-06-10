@@ -31,9 +31,11 @@ export default function aggregationBuilder () {
       _.unset(opts, '_meta')
     }
 
-    const innerClause = Object.assign({}, {
-      [type]: buildClause(field, null, opts)
-    }, metadata, nestedClause)
+    const innerClause = _.isNil(field) ?
+        Object.assign({}, {
+          [type]: buildClause(field, null, opts)
+        }, metadata, nestedClause) :
+        Object.assign({}, metadata, nestedClause)
 
     Object.assign(aggregations, {
       [aggName]: innerClause
